@@ -1,0 +1,16 @@
+# Everything corpus-specific lives here, so phase 2 (a different document set) is a config change.
+
+[corpus]
+name = "rocm"
+repo = "https://github.com/ROCm/ROCm.git"
+ref = "develop"          # branch or tag to pull docs from
+subdir = "docs"          # folder inside the repo that holds the docs
+site_url = "https://rocm.docs.amd.com/en/latest/"   # used to turn file paths into citation links
+
+[paths]
+raw = "data/raw"         # downloaded docs (git-ignored)
+index = "data/index"     # Chroma / BM25 indexes (git-ignored)
+evals = "evals"
+
+[llm]
+provider = "anthropic"   # or "openai"; key goes in .env
