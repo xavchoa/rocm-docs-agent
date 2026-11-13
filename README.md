@@ -23,6 +23,7 @@ pytest
 | Command | What it does |
 | --- | --- |
 | `rocm-agent fetch-docs` | Downloads the docs folder named in `config.toml` |
+| `rocm-agent clean-docs` | Converts them to one clean Markdown file per page in `data/clean/` |
 | `rocm-agent eval` | Runs the eval set and prints every reported number (coming soon) |
 | `rocm-agent serve` | Starts the HTTP API on port 8000 |
 

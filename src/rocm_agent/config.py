@@ -20,6 +20,7 @@ class Corpus:
 class Settings:
     corpus: Corpus
     raw_dir: Path
+    clean_dir: Path
     index_dir: Path
     evals_dir: Path
     llm_provider: str
@@ -31,6 +32,7 @@ def load(path: Path | None = None) -> Settings:
     return Settings(
         corpus=Corpus(**data["corpus"]),
         raw_dir=ROOT / paths["raw"],
+        clean_dir=ROOT / paths["clean"],
         index_dir=ROOT / paths["index"],
         evals_dir=ROOT / paths["evals"],
         llm_provider=data["llm"]["provider"],

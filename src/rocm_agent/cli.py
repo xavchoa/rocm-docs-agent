@@ -12,6 +12,8 @@ def main(argv: list[str] | None = None) -> None:
     p_fetch = sub.add_parser("fetch-docs", help="download the docs named in config.toml")
     p_fetch.add_argument("--force", action="store_true", help="download again even if present")
 
+    sub.add_parser("clean-docs", help="convert the downloaded docs to clean Markdown")
+
     sub.add_parser("eval", help="run the eval set and print every reported number")
 
     p_serve = sub.add_parser("serve", help="run the HTTP API")
@@ -24,6 +26,10 @@ def main(argv: list[str] | None = None) -> None:
         from rocm_agent.fetch import fetch_docs
 
         fetch_docs(settings, force=args.force)
+    elif args.command == "clean-docs":
+        from rocm_agent.clean import clean_docs, print_report
+
+        print_report(clean_docs(settings))
     elif args.command == "eval":
         raise SystemExit("Not built yet: the eval runner arrives on Friday (see LEARNING.md).")
     elif args.command == "serve":

@@ -9,6 +9,7 @@ site_url = "https://rocm.docs.amd.com/en/latest/"   # used to turn file paths in
 
 [paths]
 raw = "data/raw"         # downloaded docs (git-ignored)
+clean = "data/clean"     # one clean Markdown file per page (git-ignored)
 index = "data/index"     # Chroma / BM25 indexes (git-ignored)
 evals = "evals"
 
