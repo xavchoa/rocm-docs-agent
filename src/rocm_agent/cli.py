@@ -14,7 +14,9 @@ def main(argv: list[str] | None = None) -> None:
 
     sub.add_parser("clean-docs", help="convert the downloaded docs to clean Markdown")
 
-    sub.add_parser("eval", help="run the eval set and print every reported number")
+    p_eval = sub.add_parser("eval", help="run the eval set and print every reported number")
+    p_eval.add_argument("--k", type=int, default=5, help="chunks retrieved per question")
+    p_eval.add_argument("--label", default="", help="name for this run, e.g. baseline or option-d")
 
     p_serve = sub.add_parser("serve", help="run the HTTP API")
     p_serve.add_argument("--port", type=int, default=8000)
@@ -31,7 +33,9 @@ def main(argv: list[str] | None = None) -> None:
 
         print_report(clean_docs(settings))
     elif args.command == "eval":
-        raise SystemExit("Not built yet: the eval runner arrives on Friday (see LEARNING.md).")
+        from rocm_agent.evals import print_summary, run
+
+        print_summary(run(settings.evals_dir, k=args.k, label=args.label))
     elif args.command == "serve":
         import uvicorn
 
