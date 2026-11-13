@@ -43,6 +43,8 @@ def _norm(source: str) -> str:
 def score_retrieval(questions: list[dict], retrieve: Retriever, k: int) -> dict:
     per_question, by_cat = [], defaultdict(list)
     for q in questions:
+        if q["expected_source"].strip().lower() == "none":
+            continue  # unanswerable questions have no page to find; scored at answer level
         got = [_norm(c["source"]) for c in retrieve(q["question"], k)]
         want = _norm(q["expected_source"])
         rank = next((i for i, s in enumerate(got, 1) if s == want), None)

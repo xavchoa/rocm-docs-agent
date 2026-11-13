@@ -27,6 +27,12 @@ def test_hit_rate_and_mrr_match_hand_calculation():
     assert r["by_category"]["b"]["hit_rate@5"] == 0
 
 
+def test_unanswerable_questions_skip_retrieval_scoring():
+    qs = QUESTIONS + [{"id": "q4", "question": "cuda", "expected_source": "none"}]
+    r = score_retrieval(qs, fake_retrieve, k=5)
+    assert r["overall"]["n"] == 3
+
+
 def test_sources_match_across_extensions_and_anchors():
     q = [{"id": "q", "question": "install", "expected_source": "install\\rocm.rst#ubuntu"}]
     assert score_retrieval(q, fake_retrieve, k=5)["overall"]["mrr"] == 1
