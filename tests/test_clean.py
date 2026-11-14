@@ -29,6 +29,92 @@ def test_list_table_with_bullet_cells_survives(tmp_path):
         "   * - Tarball\n     - - Linux\n       - Windows\n",
         encoding="utf-8",
     )
-    md = _clean_rst(page, "10.0.0")
+    md, _ = _clean_rst(page, "10.0.0")
     assert "[TABLE]" not in md
     assert "| Tarball | Linux; Windows |" in md
+
+
+def test_selected_blocks_become_nested_applies_markers(tmp_path):
+    from rocm_agent.clean import _clean_rst
+
+    page = tmp_path / "p.rst"
+    page.write_text(
+        ".. selected:: i=pkgman\n\n"
+        "   .. selected:: os=ubuntu os=debian\n\n"
+        "      Ubuntu step.\n\n"
+        "   Any-OS step.\n",
+        encoding="utf-8",
+    )
+    md, _ = _clean_rst(page, "10.0.0")
+    assert "os=ubuntu os=debian" not in md  # no bare condition lines
+    lines = [ln for ln in md.splitlines() if ln.strip()]
+    assert lines == [
+        "<!-- applies: install_method=pkgman -->",
+        "<!-- applies: install_method=pkgman; os=ubuntu,debian -->",
+        "Ubuntu step.",
+        "<!-- /applies -->",
+        "Any-OS step.",
+        "<!-- /applies -->",
+    ]
+
+
+def test_selected_block_heading_option_becomes_heading(tmp_path):
+    from rocm_agent.clean import _clean_rst
+
+    page = tmp_path / "p.rst"
+    page.write_text(
+        ".. selected:: i=runfile\n   :heading: Download the runfile\n   :heading-level: 3\n\n"
+        "   Text.\n",
+        encoding="utf-8",
+    )
+    md, _ = _clean_rst(page, "10.0.0")
+    assert "<!-- applies: install_method=runfile -->\n\n### Download the runfile" in _tidy(md)
+
+
+def test_html_table_in_myst_with_rowspan_and_breaks():
+    raw = (
+        "## T\n\n<table>\n<thead><tr><th>Group</th><th>Item</th></tr></thead>\n<tbody>\n"
+        '<tr><td rowspan="2"><strong>Core</strong></td><td>a<br><br>b</td></tr>\n'
+        "<tr><td>c</td></tr>\n</tbody>\n</table>\n"
+    )
+    out = _tidy(_clean_myst(raw, "10.0.0"))
+    assert "<t" not in out and "[TABLE]" not in out
+    rows = [" ".join(line.split()) for line in out.splitlines()]  # ignore column padding
+    assert "| **Core** | a b |" in rows
+    assert "| **Core** | c |" in rows  # rowspan copied into the next row
+
+
+def test_myst_grid_cards_and_style_removed():
+    raw = (
+        "<style>\n.x { color: red; }\n</style>\n\n# Home\n\n"
+        "::::{grid} 1 1 2 2\n:gutter: 3\n\n:::{grid-item-card} Core SDK\nThe libraries.\n"
+        "+++\n[Go](x)\n:::\n::::\n"
+    )
+    out = _tidy(_clean_myst(raw, "10.0.0"))
+    assert out.startswith("# Home")
+    assert "{grid" not in out and ":::" not in out and "+++" not in out
+    assert "**Core SDK**\n\nThe libraries." in out
+
+
+def test_remote_content_is_spliced_and_label_before_table_parses(tmp_path):
+    from rocm_agent.clean import _clean_rst
+
+    remote = tmp_path / "_remote" / "ROCm" / "repo" / "docs" / "env.rst"
+    remote.parent.mkdir(parents=True)
+    remote.write_text(
+        "SKIPPED TITLE\n\n.. _env:\n.. list-table::\n   :header-rows: 1\n\n"
+        "   * - Variable\n     - Value\n"
+        "   * - | ``HIP_PLATFORM``\n       | The platform.\n     - ``amd``\n",
+        encoding="utf-8",
+    )
+    page = tmp_path / "p.rst"
+    page.write_text(
+        "Intro.\n\n.. remote-content::\n   :repo: ROCm/repo\n   :path: /docs/env.rst\n"
+        "   :default_branch: develop\n   :start_line: 2\n\n"
+        ".. remote-content::\n   :repo: ROCm/repo\n   :path: docs/gone.rst\n",
+        encoding="utf-8",
+    )
+    md, missing = _clean_rst(page, "10.0.0", tmp_path)
+    assert "SKIPPED TITLE" not in md
+    assert "| `HIP_PLATFORM`; The platform. | `amd` |" in md
+    assert missing == ["ROCm/repo/docs/gone.rst"]

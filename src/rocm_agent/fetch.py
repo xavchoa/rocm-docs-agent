@@ -1,7 +1,8 @@
 """Downloads the docs folder of the configured corpus repo (shallow, sparse git clone).
 
 Result: <raw_dir>/<corpus name>/ holds the docs tree, and SOURCE.txt records the exact commit,
-so every eval number can be traced back to a fixed version of the docs.
+so every eval number can be traced back to a fixed version of the docs. Sections the site pulls
+from other repos (`.. remote-content::`) are downloaded too, see remote.py.
 """
 
 import shutil
@@ -10,6 +11,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from rocm_agent.config import Settings
+from rocm_agent.remote import REMOTE_DIR, fetch_remote
 
 
 def _git(*args: str, cwd: Path | None = None) -> str:
@@ -23,6 +25,8 @@ def fetch_docs(settings: Settings, force: bool = False) -> Path:
     if dest.exists():
         if not force:
             print(f"{dest} already exists; use --force to download again.")
+            if not (dest / REMOTE_DIR / "SOURCES.txt").exists():
+                fetch_remote(dest)
             return dest
         shutil.rmtree(dest, onexc=_make_writable)
 
@@ -60,6 +64,7 @@ def fetch_docs(settings: Settings, force: bool = False) -> Path:
             counts[p.suffix or "(none)"] = counts.get(p.suffix or "(none)", 0) + 1
     top = sorted(counts.items(), key=lambda kv: -kv[1])[:6]
     print(f"Saved to {dest} at commit {sha[:10]}. Files by type: {top}")
+    fetch_remote(dest)
     return dest
 
 
