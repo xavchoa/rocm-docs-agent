@@ -4,9 +4,8 @@
 - .md pages (MyST) get a light regex cleanup: substitutions, admonitions, roles, labels,
   {grid} card markup, <style> blocks. Raw HTML tables go through pandoc like the rst tables.
 - `.. remote-content::` sections are filled from the files fetch-docs downloaded (remote.py).
-- `.. selected::` blocks (website selector) become explicit condition markers, see
-  selected_blocks.lua:
-  <!-- applies: install_method=pkgman; os=ubuntu,debian --> ... <!-- /applies -->
+- `.. selected::` blocks (website selector) become visible condition labels, see
+  selected_blocks.lua: **Applies to: install_method=pkgman; os=ubuntu,debian**
 - Every output file starts with a small front matter block: title, source path, public URL.
 
 What this deliberately does NOT do: render the Jinja/YAML-generated tables (compatibility
@@ -37,7 +36,7 @@ SKIP_DIRS = {
     "_remote",  # remote-content sources, spliced into the pages that use them
 }
 TABLE_FILTER = Path(__file__).with_name("flatten_tables.lua")  # list cells -> one line
-SELECTED_FILTER = Path(__file__).with_name("selected_blocks.lua")  # selector -> applies markers
+SELECTED_FILTER = Path(__file__).with_name("selected_blocks.lua")  # selector -> applies labels
 TEMPLATED_MARKERS = (".. datatemplate", ".. selector", "{datatemplate", ".jinja")
 
 

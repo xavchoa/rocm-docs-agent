@@ -34,7 +34,7 @@ def test_list_table_with_bullet_cells_survives(tmp_path):
     assert "| Tarball | Linux; Windows |" in md
 
 
-def test_selected_blocks_become_nested_applies_markers(tmp_path):
+def test_selected_blocks_become_visible_applies_labels(tmp_path):
     from rocm_agent.clean import _clean_rst
 
     page = tmp_path / "p.rst"
@@ -42,19 +42,20 @@ def test_selected_blocks_become_nested_applies_markers(tmp_path):
         ".. selected:: i=pkgman\n\n"
         "   .. selected:: os=ubuntu os=debian\n\n"
         "      Ubuntu step.\n\n"
-        "   Any-OS step.\n",
+        "   Any-OS step.\n\n"
+        "Page step.\n",
         encoding="utf-8",
     )
     md, _ = _clean_rst(page, "10.0.0")
     assert "os=ubuntu os=debian" not in md  # no bare condition lines
     lines = [ln for ln in md.splitlines() if ln.strip()]
-    assert lines == [
-        "<!-- applies: install_method=pkgman -->",
-        "<!-- applies: install_method=pkgman; os=ubuntu,debian -->",
+    assert lines == [  # the outer block's own label covers nothing here, so it is dropped
+        "**Applies to: install_method=pkgman; os=ubuntu,debian**",
         "Ubuntu step.",
-        "<!-- /applies -->",
+        "**Applies to: install_method=pkgman**",  # back to the parent's condition
         "Any-OS step.",
-        "<!-- /applies -->",
+        "**Applies to: all**",  # back to page level
+        "Page step.",
     ]
 
 
@@ -68,7 +69,7 @@ def test_selected_block_heading_option_becomes_heading(tmp_path):
         encoding="utf-8",
     )
     md, _ = _clean_rst(page, "10.0.0")
-    assert "<!-- applies: install_method=runfile -->\n\n### Download the runfile" in _tidy(md)
+    assert "### Download the runfile\n\n**Applies to: install_method=runfile**" in _tidy(md)
 
 
 def test_html_table_in_myst_with_rowspan_and_breaks():
