@@ -16,6 +16,7 @@ dependencies = [
     "uvicorn>=0.30",
     "python-dotenv>=1.0",
     "pypandoc_binary>=1.13",
+    "docling>=2.150,<3",  # chunking (HybridChunker); pulls torch, install the CPU build first
 ]
 
 [project.optional-dependencies]
