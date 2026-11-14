@@ -38,6 +38,29 @@ def test_sources_match_across_extensions_and_anchors():
     assert score_retrieval(q, fake_retrieve, k=5)["overall"]["mrr"] == 1
 
 
+def test_list_of_pages_is_a_hit_if_any_is_retrieved():
+    q = [
+        {
+            "id": "q",
+            "question": "what",
+            "expected_source": ["about/license.md", "components/core.md", "about/what-is-rocm.md"],
+        }
+    ]
+    r = score_retrieval(q, fake_retrieve, k=5)
+    assert r["questions"][0]["rank"] == 2  # first listed page found, not the last
+    assert r["overall"]["hit_rate@5"] == 1
+
+
+def test_list_with_no_page_retrieved_is_a_miss():
+    q = [{"id": "q", "question": "specs", "expected_source": ["about/license.md", "index.md"]}]
+    assert score_retrieval(q, fake_retrieve, k=5)["overall"]["hit_rate@5"] == 0
+
+
+def test_none_in_a_list_counts_as_unanswerable():
+    q = [{"id": "q", "question": "cuda", "expected_source": ["none"]}]
+    assert score_retrieval(q, fake_retrieve, k=5)["overall"]["n"] == 0
+
+
 def test_run_saves_results(tmp_path):
     (tmp_path / "questions.jsonl").write_text(
         "\n".join(json.dumps(q) for q in QUESTIONS), encoding="utf-8"

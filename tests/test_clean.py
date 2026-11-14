@@ -17,3 +17,18 @@ def test_myst_cleanup():
 def test_title_fallback():
     assert _title("no heading here", "page") == "page"
     assert _title("# Hello\n", "page") == "Hello"
+
+
+def test_list_table_with_bullet_cells_survives(tmp_path):
+    from rocm_agent.clean import _clean_rst
+
+    page = tmp_path / "p.rst"
+    page.write_text(
+        ".. list-table::\n   :header-rows: 1\n   :widths: 30 70\n\n"
+        "   * - Method\n     - Platform\n"
+        "   * - Tarball\n     - - Linux\n       - Windows\n",
+        encoding="utf-8",
+    )
+    md = _clean_rst(page, "10.0.0")
+    assert "[TABLE]" not in md
+    assert "| Tarball | Linux; Windows |" in md

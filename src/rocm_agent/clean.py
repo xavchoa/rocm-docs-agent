@@ -29,7 +29,8 @@ SKIP_DIRS = {
     "redirect",
     "_build",
 }
-TEMPLATED_MARKERS = (".. datatemplate", ".. selector", "{datatemplate", ".jinja")
+TABLE_FILTER = Path(__file__).with_name("flatten_tables.lua")  # list cells -> one line
+TEMPLATED_MARKERS =(".. datatemplate", ".. selector", "{datatemplate", ".jinja")
 
 
 @dataclass
@@ -77,7 +78,7 @@ def _clean_rst(path: Path, version: str) -> str:
         src,
         "gfm-raw_html",
         format="rst",
-        extra_args=["--wrap=none", "--quiet"],
+        extra_args=["--wrap=none", "--quiet", f"--lua-filter={TABLE_FILTER}"],
         cworkdir=str(path.parent),
     )
     md = re.sub(r"`([^`<\n]+?)\s+<[^>`\n]+>`", r"\1", md)  # :doc:`text <path>` leftovers

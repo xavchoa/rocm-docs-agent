@@ -6,6 +6,10 @@ Reads evals/questions.jsonl (one JSON object per line, hand-written labels):
 Only id, question and expected_source are needed for retrieval metrics. Labels are at
 page level (the cleaned file's path) so they survive chunking changes.
 
+expected_source is one page, a list of pages, or "none". A list means alternatives: the
+question is a hit if ANY listed page is in the top k, and its rank is the first listed page
+found (the usual hit-rate/MRR convention for multiple relevant documents).
+
 Needs a retriever: rocm_agent.retrieval.retrieve(query: str, k: int) -> list of chunks,
 where each chunk is a dict with at least "source" (same path format as expected_source).
 Change this contract freely; it is the only thing the runner assumes.
@@ -40,14 +44,21 @@ def _norm(source: str) -> str:
     return source.replace("\\", "/").split("#")[0].removesuffix(".rst").removesuffix(".md")
 
 
+def expected_pages(q: dict) -> set[str]:
+    """Normalised expected pages; empty set means unanswerable ("none")."""
+    raw = q["expected_source"]
+    pages = [raw] if isinstance(raw, str) else list(raw)
+    return {_norm(p) for p in pages if p.strip().lower() != "none"}
+
+
 def score_retrieval(questions: list[dict], retrieve: Retriever, k: int) -> dict:
     per_question, by_cat = [], defaultdict(list)
     for q in questions:
-        if q["expected_source"].strip().lower() == "none":
+        want = expected_pages(q)
+        if not want:
             continue  # unanswerable questions have no page to find; scored at answer level
         got = [_norm(c["source"]) for c in retrieve(q["question"], k)]
-        want = _norm(q["expected_source"])
-        rank = next((i for i, s in enumerate(got, 1) if s == want), None)
+        rank = next((i for i, s in enumerate(got, 1) if s in want), None)
         row = {
             "id": q["id"],
             "category": q.get("category", "none"),

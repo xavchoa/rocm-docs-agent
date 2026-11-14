@@ -4,7 +4,20 @@ An agentic RAG assistant that answers AMD ROCm developer questions from the offi
 documentation, calls tools for structured lookups, and returns cited answers. It says
 "not in the docs" instead of guessing.
 
-**Status:** in progress (scaffold only). Results will appear here once the eval runs.
+**Status:** in progress. Built so far: docs ingestion (fetch and clean) and a retrieval eval
+harness (page-level hit rate@k and MRR). In progress: chunking, retrieval and the agent loop.
+Results will appear here once the eval runs on a real eval set.
+
+## How this was built
+
+This is a learning project, built with Claude Code under explicit rules in
+[CLAUDE.md](CLAUDE.md):
+
+- **I write the core:** chunking, retrieval, the agent graph, tool schemas, and the eval
+  questions and labels. Claude reviews these and asks questions, but does not write them.
+- **Claude writes the plumbing:** scaffold, docs fetching and cleaning, the eval runner, API,
+  CI and README formatting. Those commits carry a `Co-Authored-By: Claude` line.
+- Design decisions and what broke are logged in [LEARNING.md](LEARNING.md).
 
 ## Setup (Windows, PowerShell)
 
@@ -24,7 +37,7 @@ pytest
 | --- | --- |
 | `rocm-agent fetch-docs` | Downloads the docs folder named in `config.toml` |
 | `rocm-agent clean-docs` | Converts them to one clean Markdown file per page in `data/clean/` |
-| `rocm-agent eval` | Runs the eval set and prints every reported number (coming soon) |
+| `rocm-agent eval` | Scores retrieval on `evals/questions.jsonl` and saves each run |
 | `rocm-agent serve` | Starts the HTTP API on port 8000 |
 
 ## Layout
