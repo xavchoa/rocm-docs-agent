@@ -17,7 +17,6 @@ This is a learning project, built with Claude Code under explicit rules in
   questions and labels. Claude reviews these and asks questions, but does not write them.
 - **Claude writes the plumbing:** scaffold, docs fetching and cleaning, the eval runner, API,
   CI and README formatting. Those commits carry a `Co-Authored-By: Claude` line.
-- Design decisions and what broke are logged in [LEARNING.md](LEARNING.md).
 
 ## Setup (Windows, PowerShell)
 
@@ -47,5 +46,4 @@ config.toml          corpus and paths (swap the corpus here)
 src/rocm_agent/      package: config, fetch, cli, api (+ chunking, retrieval, graph, tools to come)
 evals/               questions, rubric, labels and results
 docs/design.md       design note
-LEARNING.md          decisions and lessons log
 ```
