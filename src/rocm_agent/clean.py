@@ -111,6 +111,9 @@ def _clean_rst(path: Path, version: str, raw_root: Path | None = None) -> tuple[
     # `.. _label:` directly followed by a directive: docutils accepts it, pandoc then reads the
     # directive as a block quote of bullet lists. A blank line in between fixes that.
     src = re.sub(r"^(\.\. _[^\n:]+:[ \t]*\n)(?=\.\. )", r"\1\n", src, flags=re.M)
+    # Bare "|" lines are empty line blocks used as vertical spacing; several in a row make
+    # pandoc read them as heading underlines ("#### |"), swallowing what follows.
+    src = re.sub(r"^\|[ \t]*\r?$", "", src, flags=re.M)
     # gfm-raw_html drops `.. raw:: html` blocks (layout markup, not content)
     md = pypandoc.convert_text(
         src,
@@ -136,7 +139,7 @@ HTML_TAG = re.compile(
 
 def _tidy(text: str) -> str:
     text = text.replace("\r\n", "\n")
-    text = re.sub(r"<style\b.*?</style>\s*", "", text, flags=re.S | re.I)  # page CSS
+    text = re.sub(r"<(style|script)\b.*?</\1>\s*", "", text, flags=re.S | re.I)  # CSS / JS
     text = html.unescape(HTML_TAG.sub("", text))  # layout HTML that survived conversion
     text = re.sub(r"[ \t]+$", "", text, flags=re.M)
     # Text pulled out of nested HTML keeps deep indentation; outside code fences, 8+ leading

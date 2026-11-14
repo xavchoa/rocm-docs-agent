@@ -118,3 +118,16 @@ def test_remote_content_is_spliced_and_label_before_table_parses(tmp_path):
     assert "SKIPPED TITLE" not in md
     assert "| `HIP_PLATFORM`; The platform. | `amd` |" in md
     assert missing == ["ROCm/repo/docs/gone.rst"]
+
+
+def test_bare_line_block_spacers_and_script_dropped(tmp_path):
+    from rocm_agent.clean import _clean_rst
+
+    page = tmp_path / "p.rst"
+    page.write_text(
+        "Last step.\n\n|\n|\n|\n\n.. raw:: html\n\n   <script>\n     alert(1);\n   </script>\n",
+        encoding="utf-8",
+    )
+    md, _ = _clean_rst(page, "10.0.0")
+    out = _tidy(md)
+    assert out == "Last step.\n"
