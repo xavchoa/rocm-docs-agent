@@ -10,8 +10,24 @@ site_url = "https://rocm.docs.amd.com/en/latest/"   # used to turn file paths in
 [paths]
 raw = "data/raw"         # downloaded docs (git-ignored)
 clean = "data/clean"     # one clean Markdown file per page (git-ignored)
-index = "data/index"     # Chroma / BM25 indexes (git-ignored)
+index = "data/index"     # chunks.jsonl and the Chroma index (git-ignored)
+models = "data/models"   # downloaded embedding model (git-ignored)
 evals = "evals"
+
+[chunking]
+max_chars = 1200         # upper size of a chunk's text; a paragraph, code block or table row is never cut to fit
+max_tokens = 440         # budget for a chunk's text in the embedding model's tokens; the rest of its 512-token input is for the heading path
+
+[retrieval]
+embedding_model = "BAAI/bge-small-en-v1.5"   # local ONNX model: 384 dimensions, 512-token input, no API key
+# Put in front of the question only (never the chunks). BGE models are trained with it for
+# short question -> passage search; fastembed does not add it. Empty string for other models.
+query_prefix = "Represent this sentence for searching relevant passages: "
+mode = "hybrid"          # hybrid (BM25 + vectors) | vector | bm25
+candidates = 30          # results taken from each retriever before the two lists are fused
+rrf_k = 60               # reciprocal rank fusion constant
+top_k = 5                # chunks handed to the answer step
 
 [llm]
 provider = "anthropic"   # or "openai"; key goes in .env
+model = "claude-sonnet-5-5"

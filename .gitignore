@@ -7,6 +7,7 @@ __pycache__/
 data/raw/
 data/clean/
 data/index/
+data/models/
 *.egg-info/
 dist/
 evals/results/

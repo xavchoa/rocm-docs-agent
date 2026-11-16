@@ -12,11 +12,12 @@ dependencies = [
     "chromadb>=1.0",
     "rank-bm25>=0.2.2",
     "pydantic>=2.7",
+    "pyyaml>=6.0",  # the GPU support tool reads the compatibility YAML
     "fastapi>=0.115",
     "uvicorn>=0.30",
     "python-dotenv>=1.0",
     "pypandoc_binary>=1.13",
-    "docling>=2.150,<3",  # chunking (HybridChunker); pulls torch, install the CPU build first
+    "fastembed>=0.9",
 ]
 
 [project.optional-dependencies]

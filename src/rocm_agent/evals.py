@@ -85,7 +85,13 @@ def score_retrieval(questions: list[dict], retrieve: Retriever, k: int) -> dict:
     }
 
 
-def run(evals_dir: Path, k: int = 5, retrieve: Retriever | None = None, label: str = "") -> dict:
+def run(
+    evals_dir: Path,
+    k: int = 5,
+    retrieve: Retriever | None = None,
+    label: str = "",
+    meta: dict | None = None,
+) -> dict:
     if retrieve is None:
         try:
             from rocm_agent.retrieval import retrieve  # hand-written module, see CLAUDE.md
@@ -95,6 +101,7 @@ def run(evals_dir: Path, k: int = 5, retrieve: Retriever | None = None, label: s
     questions = load_questions(evals_dir / "questions.jsonl")
     result = score_retrieval(questions, retrieve, k)
     result["label"] = label
+    result["config"] = meta
     result["run_at"] = datetime.now(UTC).isoformat(timespec="seconds")
 
     out_dir = evals_dir / "results"

@@ -132,3 +132,73 @@ def test_bare_line_block_spacers_and_script_dropped(tmp_path):
     md, _ = _clean_rst(page, "10.0.0")
     out = _tidy(md)
     assert out == "Last step.\n"
+
+
+def test_selector_widget_is_dropped(tmp_path):
+    from rocm_agent.clean import _clean_rst
+
+    page = tmp_path / "p.rst"
+    page.write_text(
+        ".. selector::\n   :key: os\n\n"
+        "   .. selector-option:: Ubuntu\n      :value: ubuntu\n\n"
+        "   .. selector-option:: RHEL\n      :value: rhel\n\n"
+        "After the widget.\n",
+        encoding="utf-8",
+    )
+    md, _ = _clean_rst(page, "10.0.0")
+    assert _tidy(md) == "After the widget.\n"
+
+
+MATRIX_RST = """.. matrix::
+
+   .. matrix-head::
+
+      .. matrix-row::
+
+         .. matrix-cell::
+
+            Name
+
+         .. matrix-cell::
+
+            Value
+
+   .. matrix-row::
+
+      .. matrix-cell::
+         :rowspan: 2
+
+         Group
+
+      .. matrix-cell::
+         :show-cond: os=ubuntu
+
+         apt
+
+      .. matrix-cell::
+         :show-cond: os=rhel
+
+         dnf
+
+   .. matrix-row::
+      :show-cond: os=sles
+
+      .. matrix-cell::
+
+         zypper
+"""
+
+
+def test_matrix_becomes_a_pipe_table(tmp_path):
+    from rocm_agent.clean import _clean_rst
+
+    page = tmp_path / "p.rst"
+    page.write_text(MATRIX_RST, encoding="utf-8")
+    md, _ = _clean_rst(page, "10.0.0")
+    rows = [[c.strip() for c in ln.strip("|").split("|")] for ln in md.splitlines() if ln.strip()]
+    assert rows[0] == ["Name", "Value"]  # matrix-head is the header row
+    assert set(rows[1][0]) <= {"-"}  # the separator line
+    # neighbouring cells with different show-cond share one column, condition in brackets
+    assert rows[2] == ["Group", "apt (os=ubuntu); dnf (os=rhel)"]
+    # rowspan copied into the next row; the row-level show-cond lands on its first cell
+    assert rows[3] == ["Group (os=sles)", "zypper"]
