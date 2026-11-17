@@ -141,16 +141,24 @@ Each entry gives what happened, why, and the evidence.
 
 ## How this was built
 
-Built with Claude Code; the rules are in [CLAUDE.md](CLAUDE.md).
+Built with Claude Code; the rules are in [CLAUDE.md](CLAUDE.md). Claude's commits carry a
+`Co-Authored-By: Claude` line.
 
-- **Mine:** the evaluation set (questions from real user threads, page labels, and the rules
-  for what counts as a correct or a refused answer) and the chunking rules: the heading path
-  on every chunk, tables split between rows with the header repeated, visible "Applies to"
-  labels, and a chunks file between stages.
-- **Claude's:** the code, including the chunker, retrieval, the answer step and the agent, and
-  these design picks: the embedding model, the BM25 tokenizer and rank fusion. I planned to
-  hand-write the core and handed it over to ship sooner. Claude's commits carry a
-  `Co-Authored-By: Claude` line.
+- **Mine:**
+  - **The evaluation:** the 25 questions from real user threads, their expected pages and
+    answers, the 50 hand labels, and the labelling rules in [evals/rubric.md](evals/rubric.md)
+    (decided by me while reviewing the judge's disagreements; written up with Claude).
+  - **The chunking rules:** the heading path on every chunk, tables split between rows with
+    the header repeated, visible "Applies to" labels, and a chunks file between stages.
+  - **Reviewing the results:** tracing failures to their causes (for example, q04's retrieval
+    miss).
+- **Claude's:**
+  - **The code:** the cleaner, chunker, retrieval, the answer step, the LangGraph agent and its
+    tools, the API, the eval and judge scripts.
+  - **These design picks:** the embedding model, the BM25 tokenizer, rank fusion, and the
+    judge's model and prompt.
+
+I planned to hand-write the core and handed it over to ship sooner.
 
 ## Setup (Windows, PowerShell)
 
