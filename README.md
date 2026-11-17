@@ -14,9 +14,10 @@ the docs" instead of guessing.
 - a LangGraph agent (`rocm-agent ask --agent`) with two tools: `search_docs`, and
   `lookup_gpu_support` (exact product names against AMD's compatibility data).
 
-Both answer modes have run against a real model (Claude Sonnet 5.5) on the full eval set.
-Answer correctness is not scored yet: the 25 answers still need hand labels. CI runs lint, the
-76 tests and a Docker build on every push.
+Both answer modes have run against a real model (Claude Sonnet 5.5) on the full eval set, and
+all 50 answers are hand-labelled for correctness and citations. An LLM judge
+(`scripts/judge.py`) was checked against those labels. CI runs lint, the 76 tests and a Docker
+build on every push.
 
 ## Results so far
 
@@ -57,11 +58,40 @@ In-scope questions that were not answered:
 - Plain RAG: q03 and q20 ("not in the docs"), q17 (asked for clarification).
 - Agent: q09 and q20 ("not in the docs"), q17 (asked for clarification).
 
-Whether the 18 answers are right is not measured yet. That needs hand labels against the
-expected answers in `evals/questions.jsonl`.
-
 Files: `evals/results/20261116-212234-answers-plain.jsonl` and
 `20261116-212234-answers-agent.jsonl`.
+
+### Answer correctness (hand labels)
+
+Every answer was labelled by hand against the docs: a verdict (`correct`, `partial`, `wrong`)
+and whether its citations back up its facts. The rules, with an example for each, are in
+[evals/rubric.md](evals/rubric.md); the labels are in `evals/human_labels.jsonl`.
+
+| | Plain RAG | Agent |
+| --- | --- | --- |
+| In-scope questions (21): correct | 12 | 17 |
+| partial | 6 | 3 |
+| wrong | 3 | 1 |
+| Out-of-scope questions declined correctly | 3 of 3 | 3 of 3 |
+| Vague question met with a useful clarifying question | 1 of 1 | 1 of 1 |
+| Answers with a fact missing its citation | 2 | 1 |
+| Answers citing a section that does not support them | 0 | 0 |
+
+The agent did better than plain RAG on seven questions (q03, q07, q08, q12, q13, q19, q23),
+mostly where its extra searches found a page or section plain RAG's single search missed. It
+did worse on two: q10 (left out the community-builds link) and q04, its one `wrong` answer,
+which says the docs give no RHEL or SLES uninstall commands; they do, in chunks of a 14-chunk
+section that retrieval did not return. One run of each mode, so a
+question is 4.8 points and the gap is indicative, not measured variance.
+
+### LLM judge
+
+`scripts/judge.py` grades the same answers with a fixed rubric prompt (Claude Opus 5.5, a
+different model from the one that wrote the answers). It never sees the hand labels. On the
+first-round labels it agreed on 40 of 50 verdicts and on all 36 citation calls where either
+side gave one. It was never more lenient than the hand labels: 7 of its 10 disagreements were
+`correct` → `partial`. Reviewing those 10 led to 8 changed labels and the rule changes listed
+in the rubric. File: `evals/results/20261117-170758-judge.jsonl`.
 
 ## What was tried, changed or dropped
 
@@ -147,6 +177,7 @@ pytest
 | `rocm-agent eval` | Scores retrieval on `evals/questions.jsonl` and saves each run. Options: `--mode`, `--k`, `--label` |
 | `rocm-agent serve` | Starts the HTTP API on port 8000 |
 | `python scripts/run_answers.py` | Runs plain RAG and the agent over the eval set and saves both |
+| `python scripts/judge.py` | Grades a saved answer run with the LLM judge and reports agreement with the hand labels (needs the API key) |
 
 ## Layout
 
@@ -154,7 +185,8 @@ pytest
 config.toml          corpus, chunking, retrieval and model settings (swap the corpus here)
 src/rocm_agent/      package: config, fetch, clean, chunking, embedding, retrieval, answer,
                      graph and agent (the LangGraph loop), tools/, evals, cli, api
-scripts/             run_answers.py (answer runs over the eval set)
-evals/               questions.jsonl, candidates.md (where the questions came from), results/
+scripts/             run_answers.py (answer runs), judge.py (LLM judge)
+evals/               questions.jsonl, candidates.md (where the questions came from),
+                     rubric.md, human_labels.jsonl (+ round 1), results/
 tests/               unit tests; the agent is tested with a scripted fake model
 ```
