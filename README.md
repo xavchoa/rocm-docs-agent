@@ -16,7 +16,8 @@ the docs" instead of guessing.
 
 Both answer modes have run against a real model (Claude Sonnet 5.5) on the full eval set, and
 all 50 answers are hand-labelled for correctness and citations. An LLM judge
-(`scripts/judge.py`) was checked against those labels. CI runs lint, the 76 tests and a Docker
+(`scripts/judge.py`) was checked against my first-round labels (40 of 50 verdicts agreed). CI
+runs lint, the 76 tests and a Docker
 build on every push.
 
 ## Results so far
