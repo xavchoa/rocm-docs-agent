@@ -82,7 +82,8 @@ mostly where its extra searches found a page or section plain RAG's single searc
 did worse on two: q10 (left out the community-builds link) and q04, its one `wrong` answer,
 which says the docs give no RHEL or SLES uninstall commands; they do, in chunks of a 14-chunk
 section that retrieval did not return. One run of each mode, so a
-question is 4.8 points and the gap is indicative, not measured variance.
+question is 4.8 points and the gap is indicative, not measured variance. Failure causes, what
+the run cannot show, and what I would do differently: [evals/findings.md](evals/findings.md).
 
 ### LLM judge
 
@@ -195,6 +196,6 @@ src/rocm_agent/      package: config, fetch, clean, chunking, embedding, retriev
                      graph and agent (the LangGraph loop), tools/, evals, cli, api
 scripts/             run_answers.py (answer runs), judge.py (LLM judge)
 evals/               questions.jsonl, candidates.md (where the questions came from),
-                     rubric.md, human_labels.jsonl (+ round 1), results/
+                     rubric.md, findings.md, human_labels.jsonl (+ round 1), results/
 tests/               unit tests; the agent is tested with a scripted fake model
 ```
