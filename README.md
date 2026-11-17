@@ -1,5 +1,7 @@
 # ROCm Docs Agent
 
+[![ci](https://github.com/xavchoa/rocm-docs-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/xavchoa/rocm-docs-agent/actions/workflows/ci.yml)
+
 A retrieval-augmented assistant for AMD ROCm developer questions, built on the official ROCm
 documentation. It returns cited answers, calls tools for structured lookups, and says "not in
 the docs" instead of guessing.
@@ -13,8 +15,8 @@ the docs" instead of guessing.
   `lookup_gpu_support` (exact product names against AMD's compatibility data).
 
 Both answer modes have run against a real model (Claude Sonnet 5.5) on the full eval set.
-Answer correctness is not scored yet: the 25 answers still need hand labels. 76 tests pass.
-The repo has not run CI on GitHub yet.
+Answer correctness is not scored yet: the 25 answers still need hand labels. CI runs lint, the
+76 tests and a Docker build on every push.
 
 ## Results so far
 
