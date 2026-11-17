@@ -1,0 +1,427 @@
+{
+  "k": 10,
+  "overall": {
+    "n": 21,
+    "hit_rate@10": 0.952,
+    "mrr": 0.73
+  },
+  "by_category": {
+    "concept": {
+      "n": 1,
+      "hit_rate@10": 1.0,
+      "mrr": 0.333
+    },
+    "frameworks": {
+      "n": 4,
+      "hit_rate@10": 0.75,
+      "mrr": 0.75
+    },
+    "gpu": {
+      "n": 6,
+      "hit_rate@10": 1.0,
+      "mrr": 0.833
+    },
+    "install": {
+      "n": 5,
+      "hit_rate@10": 1.0,
+      "mrr": 0.767
+    },
+    "windows": {
+      "n": 5,
+      "hit_rate@10": 1.0,
+      "mrr": 0.633
+    }
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "category": "install",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "install/rocm-runfile-installer",
+        "install/rocm",
+        "install/rocm",
+        "reference/gpu-arch/mi300-mi200-performance-counters",
+        "install/rocm-runfile-installer",
+        "reference/gpu-arch/mi300-mi200-performance-counters",
+        "reference/gpu-arch/mi300-mi200-performance-counters",
+        "install/rocm",
+        "components/core",
+        "reference/gpu-arch/mi300-mi200-performance-counters"
+      ]
+    },
+    {
+      "id": "q03",
+      "category": "install",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "about/transition-guide-TheRock",
+        "install/rocm",
+        "install/rocm-runfile-installer",
+        "install/rocm-runfile-installer",
+        "install/rocm-runfile-installer",
+        "install/rocm-runfile-installer",
+        "about/transition-guide-TheRock",
+        "install/rocm-runfile-installer",
+        "reference/glossary/performance",
+        "install/rocm-runfile-installer"
+      ]
+    },
+    {
+      "id": "q04",
+      "category": "install",
+      "rank": 3,
+      "hit": true,
+      "retrieved": [
+        "install/rocm-runfile-installer",
+        "install/rocm-runfile-installer",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "components/hpc-sdk/install",
+        "install/rocm-runfile-installer",
+        "components/hpc-sdk/install",
+        "install/rocm",
+        "components/hpc-sdk/install"
+      ]
+    },
+    {
+      "id": "q05",
+      "category": "install",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "install/rocm",
+        "install/rocm",
+        "about/transition-guide-TheRock",
+        "about/transition-guide-TheRock",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q06",
+      "category": "frameworks",
+      "rank": null,
+      "hit": false,
+      "retrieved": [
+        "install/build-from-source",
+        "about/release-notes",
+        "about/release-notes",
+        "about/transition-guide-TheRock",
+        "about/release-notes",
+        "reference/gpu-atomics-operation",
+        "install/rocm",
+        "reference/gpu-atomics-operation",
+        "install/rocm",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q07",
+      "category": "install",
+      "rank": 2,
+      "hit": true,
+      "retrieved": [
+        "install/rocm",
+        "about/transition-guide-TheRock",
+        "about/release-notes",
+        "about/what-is-rocm",
+        "install/build-from-source",
+        "install/rocm",
+        "about/release-notes",
+        "install/build-from-source",
+        "install/build-from-source",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q08",
+      "category": "gpu",
+      "rank": 2,
+      "hit": true,
+      "retrieved": [
+        "about/release-notes",
+        "about/transition-guide-TheRock",
+        "about/release-notes",
+        "about/release-notes",
+        "reference/gpu-atomics-operation",
+        "about/release-notes",
+        "about/release-notes",
+        "about/release-notes",
+        "reference/precision-support",
+        "compatibility/compatibility-matrix"
+      ]
+    },
+    {
+      "id": "q09",
+      "category": "gpu",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "about/release-notes",
+        "about/transition-guide-TheRock",
+        "about/release-notes",
+        "about/transition-guide-TheRock",
+        "index",
+        "install/rocm",
+        "about/transition-guide-TheRock",
+        "about/release-notes",
+        "about/release-notes",
+        "reference/precision-support"
+      ]
+    },
+    {
+      "id": "q10",
+      "category": "gpu",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "about/release-notes",
+        "install/rocm",
+        "install/rocm",
+        "about/release-notes",
+        "about/transition-guide-TheRock",
+        "about/transition-guide-TheRock",
+        "reference/system-optimization/rdna3-5",
+        "about/transition-guide-TheRock",
+        "about/release-notes",
+        "install/rocm-runfile-installer"
+      ]
+    },
+    {
+      "id": "q11",
+      "category": "gpu",
+      "rank": 2,
+      "hit": true,
+      "retrieved": [
+        "reference/system-optimization/rdna3-5",
+        "about/transition-guide-TheRock",
+        "install/rocm",
+        "reference/system-optimization/rdna3-5",
+        "about/release-notes",
+        "index",
+        "about/release-notes",
+        "ai-ecosystem",
+        "about/release-notes",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q12",
+      "category": "gpu",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "reference/system-optimization/rdna3-5",
+        "about/release-notes",
+        "install/rocm",
+        "compatibility/compatibility-matrix",
+        "compatibility/compatibility-matrix",
+        "install/rocm",
+        "components/hpc-sdk/install",
+        "compatibility/compatibility-matrix",
+        "install/rocm-runfile-installer",
+        "components/hpc-sdk/install"
+      ]
+    },
+    {
+      "id": "q13",
+      "category": "gpu",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "reference/system-optimization/rdna3-5",
+        "reference/system-optimization/rdna3-5",
+        "reference/system-optimization/rdna3-5",
+        "reference/gpu-atomics-operation",
+        "reference/gpu-arch/mi300-mi200-performance-counters",
+        "about/release-notes",
+        "about/release-notes",
+        "reference/gpu-atomics-operation",
+        "reference/glossary/device-hardware",
+        "about/release-notes"
+      ]
+    },
+    {
+      "id": "q16",
+      "category": "windows",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q17",
+      "category": "windows",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm-runfile-installer",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q18",
+      "category": "windows",
+      "rank": 3,
+      "hit": true,
+      "retrieved": [
+        "install/build-from-source",
+        "about/transition-guide-TheRock",
+        "install/rocm",
+        "install/rocm",
+        "compatibility/compatibility-matrix",
+        "install/rocm",
+        "about/release-notes",
+        "about/release-notes",
+        "install/rocm",
+        "ai-ecosystem"
+      ]
+    },
+    {
+      "id": "q19",
+      "category": "windows",
+      "rank": 2,
+      "hit": true,
+      "retrieved": [
+        "install/build-from-source",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "install/rocm",
+        "about/release-notes",
+        "install/rocm",
+        "install/rocm-runfile-installer",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q20",
+      "category": "windows",
+      "rank": 3,
+      "hit": true,
+      "retrieved": [
+        "reference/hip-programming",
+        "about/release-notes",
+        "install/rocm",
+        "reference/graph-safe-support",
+        "reference/hip-programming",
+        "reference/environment-variables/index",
+        "reference/precision-support",
+        "reference/glossary/host-software",
+        "reference/environment-variables/index",
+        "components/math-and-compute-libs"
+      ]
+    },
+    {
+      "id": "q22",
+      "category": "frameworks",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "ai-ecosystem",
+        "about/release-notes",
+        "install/rocm",
+        "install/rocm",
+        "compatibility/compatibility-matrix",
+        "about/transition-guide-TheRock",
+        "install/build-from-source",
+        "install/rocm",
+        "install/rocm",
+        "index"
+      ]
+    },
+    {
+      "id": "q23",
+      "category": "frameworks",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "about/release-notes",
+        "about/transition-guide-TheRock",
+        "index",
+        "compatibility/compatibility-matrix",
+        "ai-ecosystem",
+        "ai-ecosystem",
+        "install/build-from-source",
+        "compatibility/compatibility-matrix",
+        "about/release-notes",
+        "install/rocm"
+      ]
+    },
+    {
+      "id": "q24",
+      "category": "frameworks",
+      "rank": 1,
+      "hit": true,
+      "retrieved": [
+        "reference/hip-programming",
+        "components/core",
+        "reference/system-optimization/gpu-isolation",
+        "reference/glossary/device-software",
+        "components/math-and-compute-libs",
+        "reference/gpu-arch/index",
+        "install/rocm",
+        "reference/system-optimization/bar-access-limits",
+        "reference/gpu-atomics-operation",
+        "reference/system-optimization/bar-access-limits"
+      ]
+    },
+    {
+      "id": "q25",
+      "category": "concept",
+      "rank": 3,
+      "hit": true,
+      "retrieved": [
+        "install/rocm-runfile-installer",
+        "install/rocm-runfile-installer",
+        "about/what-is-rocm",
+        "about/license",
+        "install/rocm-runfile-installer",
+        "index",
+        "components/core",
+        "index",
+        "about/what-is-rocm",
+        "about/license"
+      ]
+    }
+  ],
+  "label": "hybrid-k10",
+  "config": {
+    "mode": "hybrid",
+    "embedding_model": "BAAI/bge-small-en-v1.5",
+    "query_prefix": "Represent this sentence for searching relevant passages: ",
+    "candidates": 30,
+    "rrf_k": 60,
+    "max_chars": 1200,
+    "chunks": 661,
+    "fingerprint": "b131799c14f8430e"
+  },
+  "run_at": "2026-11-15T15:58:04+00:00"
+}

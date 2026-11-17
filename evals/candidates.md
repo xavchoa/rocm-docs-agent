@@ -1,15 +1,14 @@
 # Candidate eval questions from real users
 
-Collected 2026-11-14 from search results (GitHub issues, Reddit r/ROCm via mirrors, forums).
-Questions are paraphrased from thread titles and search snippets. **Open the link before
-using one**: the thread may ask something slightly different, and old threads refer to old
-ROCm versions (your corpus is ROCm 10.0.0, `develop` at the commit in data/raw/rocm/SOURCE.txt).
+Collected 2026-11-14 from search results (GitHub issues, Reddit r/ROCm, forums). Questions
+are paraphrased from thread titles and search snippets. A thread may ask something slightly
+different, and old threads refer to old ROCm versions (the corpus is ROCm 10.0.0, `develop`
+at the commit in data/raw/rocm/SOURCE.txt).
 
 "Docs mention" = pages in data/clean/rocm/ where the key terms appear (grep). It means the
-page *might* answer it, not that it does. Expected answers are not filled in: finding and
-checking them is your labelling job.
-
-Pick 15 to 20, check the answer in the page, then write them to evals/questions.jsonl.
+page *might* answer the question, not that it does. Expected answers are not in this file:
+they were checked against the pages and written to evals/questions.jsonl, which holds the
+25 questions picked from this list.
 
 ## Install and setup
 

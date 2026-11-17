@@ -10,4 +10,3 @@ data/index/
 data/models/
 *.egg-info/
 dist/
-evals/results/
