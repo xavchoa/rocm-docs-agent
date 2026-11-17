@@ -1,0 +1,50 @@
+{"id": "q01", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q01", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": "example command combined from S3+S4; no logout/reboot step"}
+{"id": "q02", "mode": "plain", "verdict": "correct", "citation_ok": false, "note": ""}
+{"id": "q02", "mode": "agent", "verdict": "correct", "citation_ok": null, "note": ""}
+{"id": "q03", "mode": "plain", "verdict": "wrong", "citation_ok": null, "note": ""}
+{"id": "q03", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q04", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q04", "mode": "agent", "verdict": "wrong", "citation_ok": true, "note": ""}
+{"id": "q05", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q05", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q06", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q06", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q07", "mode": "plain", "verdict": "partial", "citation_ok": true, "note": ""}
+{"id": "q07", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q08", "mode": "plain", "verdict": "wrong", "citation_ok": true, "note": "its gfx1100 didnt pick up "}
+{"id": "q08", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q09", "mode": "plain", "verdict": "partial", "citation_ok": true, "note": "but more correct than answer AGENT"}
+{"id": "q09", "mode": "agent", "verdict": "partial", "citation_ok": null, "note": "didnt mention to community enabled to see supported GPUs"}
+{"id": "q10", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q10", "mode": "agent", "verdict": "partial", "citation_ok": true, "note": "Yes but did not mention it might be in the community, but small system prompt can fix that, overall good answer otherwise."}
+{"id": "q11", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q11", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q12", "mode": "plain", "verdict": "partial", "citation_ok": true, "note": "Kernel requirements yes, but it didnt manage to see the Ubuntu 24.04 HWE kernel 6.17.0-19.19....."}
+{"id": "q12", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q13", "mode": "plain", "verdict": "partial", "citation_ok": true, "note": "wasnt able to get the real recommendations"}
+{"id": "q13", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q14", "mode": "plain", "verdict": "correct", "citation_ok": null, "note": ""}
+{"id": "q14", "mode": "agent", "verdict": "correct", "citation_ok": null, "note": ""}
+{"id": "q15", "mode": "plain", "verdict": "correct", "citation_ok": null, "note": ""}
+{"id": "q15", "mode": "agent", "verdict": "correct", "citation_ok": null, "note": ""}
+{"id": "q16", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q16", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q17", "mode": "plain", "verdict": "correct", "citation_ok": false, "note": "questions point at ROCDXG/AMD SMI/verify step; Ubuntu versions uncited"}
+{"id": "q17", "mode": "agent", "verdict": "correct", "citation_ok": false, "note": "questions point at ROCDXG/AMD SMI/rocminfo; Ubuntu versions uncited"}
+{"id": "q18", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q18", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q19", "mode": "plain", "verdict": "wrong", "citation_ok": true, "note": "no mention of tarball at all"}
+{"id": "q19", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q20", "mode": "plain", "verdict": "partial", "citation_ok": null, "note": "says nothing false but misses the key point: remove HIP SDK before ROCm 10"}
+{"id": "q20", "mode": "agent", "verdict": "partial", "citation_ok": null, "note": "says nothing false but misses the key point: remove HIP SDK before ROCm 10"}
+{"id": "q21", "mode": "plain", "verdict": "correct", "citation_ok": null, "note": ""}
+{"id": "q21", "mode": "agent", "verdict": "correct", "citation_ok": null, "note": ""}
+{"id": "q22", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q22", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q23", "mode": "plain", "verdict": "partial", "citation_ok": true, "note": "versions right; falsely says the matrix has no vLLM row (side remark)"}
+{"id": "q23", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q24", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q24", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q25", "mode": "plain", "verdict": "correct", "citation_ok": true, "note": ""}
+{"id": "q25", "mode": "agent", "verdict": "correct", "citation_ok": true, "note": ""}
