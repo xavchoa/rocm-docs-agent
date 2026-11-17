@@ -1,6 +1,6 @@
 """Splits the cleaned Markdown pages into retrieval chunks: data/index/chunks.jsonl.
 
-Rules (docs/design.md section 1 and the 15 Nov entries in the learning log):
+Rules:
 
 - A chunk never crosses a heading. Its searched text starts with the heading path, so a chunk
   still says where it sits: "Install AMD ROCm 10.0.0 > Prerequisites > Install Python".
